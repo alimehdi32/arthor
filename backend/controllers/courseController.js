@@ -1,4 +1,6 @@
 const { GoogleGenAI } = require('@google/genai');
+const Course = require('../models/Course');
+
 
 
 exports.generateRoadmap = async (req, res) => {
@@ -44,7 +46,8 @@ a short description of the topic
     },
     ...
   ]
-}
+}       
+        do not include any other text, only the JSON response, also do not use triple backticks or the word 'json'
         🧾 Learning goal: ${prompt}
         `
 
@@ -56,7 +59,31 @@ a short description of the topic
         contents: systemPrompt,
     });
 
+    const courseData = JSON.parse(response.candidates[0].content.parts[0].text);
+    const { courseTitle, duration, weeks } = courseData;
+    console.log("------------------------------Parsed Course Data:", courseData);
     
+
+    const newCourse = new Course({ 
+        course: courseTitle,
+        duration: duration,
+        roadmap: weeks.map(week => ({
+            title: week.title,
+            estimatedTime: week.estimatedTime,
+            days: week.days.map(day => ({
+                day: day.day,
+                topic: day.topic,
+                description: day.description
+            }))
+        }))
+     })
+    newCourse.save()
+    .then(() =>{
+        console.log("Course saved successfully:", newCourse);
+    })
+    .catch(err => {
+        console.error("Error saving course:", err);
+    });
 
     res.json(response.candidates[0].content.parts[0].text);
 }
