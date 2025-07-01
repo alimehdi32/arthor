@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
             },
             message: 'Authentication key is required for admin role.',
         },
+        required: function () {
+            // Only required if role is 'admin'
+            return this.role === 'admin';
+        }
     },
     createdAt: {
         type: Date,
