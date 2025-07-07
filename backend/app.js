@@ -1,14 +1,14 @@
-const express = require('express')
-const morgan = require('morgan')
-const dotenv = require('dotenv')
-const cors = require('cors')
+const express = require('express');
+const morgan = require('morgan');
+const dotenv = require('dotenv');
+const cors = require('cors');
 const courseRoutes = require('./routes/courseRoutes');
 const connectToMongoDB = require('./config/mongoConfig');
 const userRoutes = require('./routes/Userconfig');
 const cookieParser = require('cookie-parser');
 
 // Load environment variables from .env file
-dotenv.config()
+dotenv.config();
 
 // Connect to MongoDB
 connectToMongoDB();
