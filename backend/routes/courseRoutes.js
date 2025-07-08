@@ -2,11 +2,15 @@ const express = require('express');
 const router = express.Router();
 const courseController = require('../controllers/courseController');
 const { searchVideos } = require('../controllers/videoSearch');
+const { getVideos } = require('../controllers/videoSearch');
+const { auth } = require('../middleware/auth');
 
 // @route   POST /api/course/generate
 // @desc    Generate course roadmap from natural language prompt
-router.post('/roadmap', courseController.generateRoadmap);
-router.get('/search-videos', searchVideos);
+router.post('/roadmap', auth, courseController.generateRoadmap);
+router.get('/get-roadmap', auth, courseController.getRoadmap);
+router.get('/search-videos', auth, searchVideos);
+router.get('/get-courses', auth, getVideos);
 
 // @route   GET /api/course/demo
 // @desc    Return a static/dummy course as a demo

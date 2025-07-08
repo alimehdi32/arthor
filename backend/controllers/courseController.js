@@ -75,7 +75,8 @@ a short description of the topic
                 topic: day.topic,
                 description: day.description
             }))
-        }))
+        })),
+        createdBy: req.user.id
      })
     newCourse.save()
     .then(() =>{
@@ -86,4 +87,21 @@ a short description of the topic
     });
 
     res.json(response.candidates[0].content.parts[0].text);
+}
+
+exports.getRoadmap = async (req, res) => {
+  try {
+     const courses = await Course.find({ createdBy: req.user.id });
+    if (!courses || courses.length === 0) {
+        return res.status(404).json({ error: 'No courses found' });
+    }
+    res.json({ 
+        success: true, 
+        courses: courses 
+    });
+  } catch (error) {
+    console.error("Error fetching roadmap:", error);
+    res.status(500).json({ error: 'Failed to fetch roadmap' });
+    
+  }
 }

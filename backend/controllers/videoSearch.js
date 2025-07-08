@@ -20,6 +20,7 @@ exports.searchVideos = async (req, res) => {
             description: video.snippet.description,
             thumbnail: video.snippet.thumbnails.default.url,
             channelTitle: video.snippet.channelTitle,
+            createdBy: req.user.id
         })
         await videoData.save();
 
@@ -31,6 +32,24 @@ exports.searchVideos = async (req, res) => {
         });
     } catch (error) {
         console.error('Error fetching YouTube videos:', error);
+        return res.status(500).json({ error: 'Failed to fetch videos' });
+        
+    }
+}
+
+exports.getVideos = async (req, res) => {
+    try {
+        const videos = await Video.find({ createdBy: req.user.id})
+        console.log('----Videos fetched from database----', videos);
+        if (!videos || videos.length === 0) {
+            return res.status(404).json({ error: 'No videos found' });
+        }
+        res.json({
+            success: true,
+            videos: videos
+        });
+    } catch (error) {
+        console.error('Error fetching videos:', error);
         return res.status(500).json({ error: 'Failed to fetch videos' });
         
     }

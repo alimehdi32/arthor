@@ -22,10 +22,11 @@ const courseSchema = new mongoose.Schema({
             ]
         }
     ],
-    /*createdBy: {
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Assuming you have a User model
-    },*/
+        ref: 'User',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now,

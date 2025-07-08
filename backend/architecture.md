@@ -30,3 +30,27 @@
 ├── app.js                       # Entry point – set up server and routes
 ├── package.json
 └── README.md
+
+
+// Get courses for current user
+app.get('/courses', async (req, res) => {
+    try {
+        const courses = await Course.find({ createdBy: req.user._id });
+        res.json(courses);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+
+// Get videos for current user
+app.get('/videos', async (req, res) => {
+    try {
+        const videos = await Video.find({ createdBy: req.user._id });
+        res.json(videos);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
