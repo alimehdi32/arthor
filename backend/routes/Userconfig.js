@@ -9,5 +9,11 @@ const { logout } = require('../user/logout');
 router.post('/signup', signUp.signUp);
 router.post('/login', checkLogin, checkOrigin, login);
 router.get('/logout', logout);
+router.get('/me', checkLogin, (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: 'User is loggedIn'
+    });
+})
 
 module.exports = router;
