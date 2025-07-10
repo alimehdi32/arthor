@@ -1,0 +1,67 @@
+✅ Free Features
+AI-Powered Roadmap Generator
+
+YouTube Video Integration
+
+Multi-Stage Roadmap Viewer (Beginner -> Advanced)
+
+Weekly/Day-wise Breakdown
+
+Progress Tracker
+
+Save/Bookmark Videos
+
+User Dashboard (Basic)
+
+Roadmap History & Recent Searches
+
+Dark Mode & Focus Mode
+
+Reminder System (Basic - daily goals)
+
+Gamification (Basic badges/streaks)
+
+Shareable Roadmaps
+
+🔒 Premium Features
+Learning Style Preferences
+
+Smart Topic Explorer (auto-suggest related skills)
+
+Skill Level Estimator (via AI quiz/Q&A)
+
+Concept Prerequisite Checker
+
+Dynamic Video Recommendation Engine (adaptive curation)
+
+Ask AI (In-app Doubt Solver)
+
+Multiple Roadmap Management
+
+Custom Study Plan Generator (weekly/monthly)
+
+Advanced Progress Analytics & Insights
+
+Resume Booster Suggestions (certifications, project ideas)
+
+Peer Learning Rooms / Community Chat
+
+Community Feedback on Roadmaps
+
+Mentorship Matching (future expansion)
+
+Offline Mode / Downloadable PDF Roadmaps
+
+Export to Google Calendar / Notion
+
+AI-generated Flashcards & Notes (experimental)
+
+No Ads
+
+💸 Monetization Model
+Free Plan: Full access to 1 roadmap at a time with core features.
+
+Premium Plan (Rs.149-Rs.299/month): Unlock all features + unlimited roadmaps + mentorship perks.
+
+Student Discount or Lifetime Deal option to boost early adoption.
+
