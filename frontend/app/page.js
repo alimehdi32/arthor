@@ -1,6 +1,7 @@
 import Features from "./components/Features";
 import Reviews from "./components/Reviews";
 import Subscription from "./components/Subscription";
+import Working from "./components/Working";
 
 export default function Home() {
   const messages = [
@@ -56,6 +57,7 @@ export default function Home() {
         </div>
       </div>
       <Features />
+      <Working/>
       <Subscription />
       <Reviews />
     </div>
