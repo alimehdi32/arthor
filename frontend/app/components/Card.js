@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Card = ({index, feature, desc}) => {
-  console.log(index, feature, desc)
+  
   return (
     <>
       { (index <= 2) ?

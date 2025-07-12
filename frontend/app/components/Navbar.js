@@ -10,12 +10,14 @@ const Navbar = () => {
     try {
       const response = await fetch(`http://localhost:5000/user/me`, {
         method: 'GET',
+        credentials: 'include', // <== important!
       });
       if (response.ok) {
         setLoggedIn(true);
         console.log('User is logged in:', response);
       } else {
         setLoggedIn(false);
+        console.log('User is not logged in:', response);
       }
     } catch (error) {
       console.error('Error checking login status:', error);
