@@ -19,7 +19,7 @@ const Working = () => {
                 </div>
                 <div className='pl-20'>
                     <h5 className='text-lg font-semibold'>4. Commit with Confidence</h5>
-                    <p className='ml-5'>Once you are satisfied, hit Commit to lock your roadmap into PromptVault.
+                    <div className='ml-5'>Once you are satisfied, hit Commit to lock your roadmap into PromptVault.
                          <div className='font-bold'>Note:</div>
 
                         <div className='ml-5 mt-1.5'>Committed roadmaps are permanent and cannot be deleted.</div>
@@ -30,13 +30,13 @@ const Working = () => {
 
                         <div className='ml-5 mt-1.5'>LearnTube will begin generating video lessons for each topic in your roadmap.</div>
 
-                    </p>
+                    </div>
                 </div>
                 <div className='pl-20'>
                     <h5 className='text-lg font-semibold'>5. Stock System</h5>
-                    <p className='ml-5'>Each commit costs 3 stocks if you&#39;re on the free plan. <div></div>
+                    <div className='ml-5'>Each commit costs 3 stocks if you&#39;re on the free plan. <div></div>
 
-                        Subscription plans offer more flexibility—see details below!</p>
+                        Subscription plans offer more flexibility—see details below!</div>
                 </div>
             </div>
         </div>
