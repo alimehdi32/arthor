@@ -6,6 +6,16 @@
   --foreground: #171717;
 }
 
+/* You might need to use !important if styles are being overridden */
+.my-custom-toast {
+  background-color: #f0f8ff !important; /* AliceBlue */
+  color: #00008b !important; /* DarkBlue */
+  border-radius: 8px !important;
+  padding: 16px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  font-family: 'Arial', sans-serif !important;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
