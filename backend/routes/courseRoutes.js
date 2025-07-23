@@ -9,6 +9,7 @@ const { auth } = require('../middleware/auth');
 // @desc    Generate course roadmap from natural language prompt
 router.post('/roadmap', auth, courseController.generateRoadmap);
 router.get('/get-roadmap', auth, courseController.getRoadmap);
+router.post('/save-roadmap', auth, courseController.saveRoadmap);
 router.get('/search-videos', auth, searchVideos);
 router.get('/get-courses', auth, getVideos);
 

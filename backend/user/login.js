@@ -5,21 +5,21 @@ const userModel = require('../models/user');
 exports.login = async (req, res) => {
 
     const { email, password } = req.body;
-     console.log('-------------Login request received------------------');
-    try{
+    console.log('-------------Login request received------------------');
+    try {
 
         // check if user exists
         const user = await userModel.findOne({ email });
-        if( !user ) {
-             return res.status(500).json({
+        if (!user) {
+            return res.status(500).json({
                 success: false,
                 message: 'User does not exist',
-             });
+            });
         }
         console.log('-------------User found------------------');
 
         const isMatched = await bcrypt.compare(password, user.password);
-        if( !isMatched ){
+        if (!isMatched) {
             console.log('-------------Password mismatch------------------');
             return res.status(500).json({
                 success: false,
@@ -39,9 +39,10 @@ exports.login = async (req, res) => {
         // set cookie with JWT token
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // set to true in production
+            secure: false,           // only true in HTTPS
+            sameSite: 'Lax',         // or 'None' + HTTPS if frontend and backend are different origins
             maxAge: 24 * 60 * 60 * 1000, // 1 day
-        })
+        });
         console.log('-------------Cookie set with JWT token------------------');
 
 

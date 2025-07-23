@@ -1,10 +1,15 @@
 exports.checkLogin = async (req, res, next) => {
-    const token = req.cookies.token; // getting token from cookies
+    const token = req.cookies.token;
+    console.log('Cookies:', req.cookies)
+    console.log('Token:', token);
 
-     if( token ) next();
+    if (token) {
+        return next(); // ✅ use return to exit the function
+    }
 
-     return res.status(403).json({
-            success: false,
-            message: 'You are not logged in',
-        });
-}
+    // Only runs if token is missing
+    return res.status(403).json({
+        success: false,
+        message: 'You are not logged in',
+    });
+};

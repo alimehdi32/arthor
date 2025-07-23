@@ -20,7 +20,10 @@ const port = 5000
 // middlewares
 app.use(morgan('dev')) // Logging middleware
 app.use(express.json()) // Middleware to parse JSON bodies
-app.use(cors()) // Enable CORS for all routes
+app.use(cors({
+  origin: 'http://localhost:3000', // frontend origin
+  credentials: true,              // allow cookies to be sent
+})) // Enable CORS for all routes
 app.use(cookieParser()); // <-- middleware to read cookies
 
 app.get('/', (req, res) => {

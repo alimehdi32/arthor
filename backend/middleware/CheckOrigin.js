@@ -1,8 +1,8 @@
-const ALLOWED_ORIGINS = ['yourdomain', 'localhost:3000'];
+const ALLOWED_ORIGINS = ['yourdomain', 'http://localhost:3000'];
 
 exports.checkOrigin = (req, res, next) => {
     const origin = req.get('Origin') || req.get('Referer');
-
+    console.log('Request Origin:', origin); // Log the origin for debugging
     if (!origin) {
         return res.status(400).json({ message: 'Missing origin' });
     }
