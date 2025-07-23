@@ -17,10 +17,10 @@ const Courses = ({ Courses }) => {
                 <div>{Courses.course}</div>
             </div>
             <div className={`border border-gray-300 p-6 mt-4 bg-gray-50 transition-all duration-300 ease-in-out ${open ? 'block' : 'hidden'}`}>
-                <div>Duration of the Course: {Courses.duration}</div>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-                    {Courses.roadmap.map((week) => (
-                        <Roadmap key={week._id} week={week} />
+                <div className='text-black'>Duration of the Course: {Courses.duration}</div>
+                <div className='text-black gap-4'>
+                    {Courses.roadmap.map((topics) => (
+                        <Roadmap key={topics._id} topics={topics} />
                     ))}
                 </div>
             </div>
