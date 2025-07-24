@@ -39,7 +39,7 @@ const SubTopics = ( { subtopics } ) => {
       const data = await response.json();
       if (data.success) {
         console.log('Videos fetched successfully:', data.videos);
-        Router.push(`/LearnTube?videoId=${data.videos[0].videoId}&title=${data.videos[0].title}`)
+        Router.push(`/LearnTube?videoId=${data.videos.videoId}&title=${data.videos.title}`)
       } else {
         const videoData = await searchVideos(subtopics.topic);
         console.log('Fetched videos:', videoData);
