@@ -11,7 +11,7 @@ router.post('/roadmap', auth, courseController.generateRoadmap);
 router.get('/get-roadmap', auth, courseController.getRoadmap);
 router.post('/save-roadmap', auth, courseController.saveRoadmap);
 router.get('/search-videos', auth, searchVideos);
-router.get('/get-courses', auth, getVideos);
+router.get('/get-course-videos', auth, getVideos);
 
 // @route   GET /api/course/demo
 // @desc    Return a static/dummy course as a demo
