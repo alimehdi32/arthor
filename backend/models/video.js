@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const videoSchema = new mongoose.Schema({
+    videoQuery: {
+        type: String,
+        required: true,
+    },
     videoId: {
         type: String,
         required: true,

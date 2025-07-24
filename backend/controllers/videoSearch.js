@@ -10,11 +10,14 @@ exports.searchVideos = async (req, res) => {
 
         const response = await axios.get(url);
 
-        const random = Math.ceil(Math.random() * response.data.items.length); // Random index for video selection
+        const random = Math.floor(Math.random() * response.data.items.length); // Random index for video selection
+        console.log('random index: ----------------', random);
+        console.log('response data: ----------------', response.data.items.length);
         const video = response.data.items[random];
         console.log('video: ---------------', video)
 
         const videoData = new Video({
+            videoQuery: query.replaceAll('%20', ' '),
             videoId: video.id.videoId,
             title: video.snippet.title,
             description: video.snippet.description,
@@ -40,14 +43,19 @@ exports.searchVideos = async (req, res) => {
 
 exports.getVideos = async (req, res) => {
     const query = req._parsedUrl.query.split('=')[1].replaceAll('%20', ' ');
-    console.log(query)
+    console.log('video query----------------------', query)
     try {
         const videos = await Video.find({ createdBy: req.user.id })
-        console.log('----Videos fetched from database----', videos);
+        
         let correctVideo;
         videos.map((video) => {
-            if (video.title === query)
+            if (video.videoQuery === query){
                 correctVideo = video;
+                console.log('correct video found', correctVideo);
+                }else{
+                console.log('video not found', video.videoQuery);
+                }
+                
         });
         if (!videos || videos.length === 0) {
             return res.status(404).json({ error: 'No videos found' });
