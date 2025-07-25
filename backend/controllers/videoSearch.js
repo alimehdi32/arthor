@@ -20,7 +20,7 @@ exports.searchVideos = async (req, res) => {
             videoQuery: query.replaceAll('%20', ' '),
             videoId: video.id.videoId,
             title: video.snippet.title,
-            description: video.snippet.description,
+            description: video.snippet.description || 'No description available',
             thumbnail: video.snippet.thumbnails.default.url,
             channelTitle: video.snippet.channelTitle,
             createdBy: req.user.id

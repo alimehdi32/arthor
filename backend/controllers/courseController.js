@@ -46,11 +46,36 @@ a short description of the topic
     },
     ...
   ]
-}       
+}         
         do not include any other text, only the JSON response, also do not use triple backticks or the word 'json'
         🧾 Learning goal: ${prompt}
 
+         also keep in mind that each and every topic should meaningful in the sense that last topic couvered and next topic to cover must linked.
 
+         for example: {
+  "courseTitle": "C++ for beginner",
+  "duration": "<total duration, e.g., '8 weeks'>",
+  "weeks": [
+    {
+      "title": "Week 1: C++ Syntax and Basics",
+      "estimatedTime": "<e.g., 7 days>",
+      "days": [
+        {
+          "day": 1,
+          "topic": "Introduction to C++",
+          "description": "<Short description>"
+        },
+        {
+          "day": 2,
+          "topic": "Variables and Data Types in C++",
+          "description": "<Short description>"
+        }
+        ...
+      ]
+    },
+    ...
+  ]
+}   as mentioned above is the example of what i'm trying to say, since courseTitle is C++ for beginner, here the main keyword of which course is about is C++, you have to find this keyword and as mentioned in respective topics of days C++ is included, so that when i fetch videos from You Tube, i will get videos of the course i wanted, otherwise what will happen if C++ is not mentioned and i'm fetching videos for Basics and Syntax, it will provide me with videos of any other coding language.      
 
         additional: In the Scenario where User has already asked to generate a roadmap on a specific course, you generated the roadmap then if the user ask for some query, for example "i want 2 weeks to complete OOPs in Java, so generate my roadmap with respect to this" so make only those changes which fulfill the user's query. Then again return the updated roadmap as specified in JSON format with only the changes necessary. 
         `
