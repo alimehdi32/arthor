@@ -7,7 +7,7 @@ const { checkLogin } = require('../middleware/checkLogin');
 const { logout } = require('../user/logout');
 const { auth } = require('../middleware/auth');
 
-router.post('/signup', signUp.signUp);
+router.post('/signup', checkOrigin, signUp.signUp);
 router.post('/login', checkOrigin, login);
 router.get('/logout', logout);
 router.get('/me', checkLogin, (req, res) => {

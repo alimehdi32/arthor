@@ -5,6 +5,7 @@ const cors = require('cors');
 const courseRoutes = require('./routes/courseRoutes');
 const connectToMongoDB = require('./config/mongoConfig');
 const userRoutes = require('./routes/Userconfig');
+const stockRoutes = require('./routes/stockConfig');
 const cookieParser = require('cookie-parser');
 
 // Load environment variables from .env file
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 app.use('/user', userRoutes); // User routes
 app.use('/course', courseRoutes); // Course routes
 
+app.use('/stock', stockRoutes); // Stock routes
 
 
 app.listen(port, () => {
