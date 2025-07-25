@@ -69,21 +69,33 @@ const PromptLab = () => {
     }
   }
   return (
-    <div className="flex flex-col items-center relative w-full justify-center bg-neutral-900 text-white">
+    <div className="flex flex-col items-center relative w-full justify-center bg-neutral-900 text-white pb-[100px]">
       {roadmap.courseTitle ?
         <div>
           {!saved && <button onClick={saveRoadmap} className='h-12 w-24 hover:bg-white/5 rounded-2xl text-xl font-medium fixed right-[50px] bg-white/20 transition duration-200 border border-gray-800'>Commit</button>}
 
           <div className='flex flex-col items-center justify-center mt-20'>
             <div className='bg-neutral-800 p-6 rounded-lg shadow-lg w-[800px]'>
-              <h1 className='text-2xl font-bold mb-4'>{roadmap.courseTitle}</h1>
-              <p className='text-lg mb-4'>{roadmap.duration}</p>
+              <h1 className='text-2xl font-extrabold font-mono mb-4'>{roadmap.courseTitle}</h1>
+              <p className='text-xl font-bold mb-4'>{roadmap.duration}</p>
 
               {roadmap.weeks && roadmap.weeks.map((week, index) => (
                 <div key={index} className='mt-4'>
-                  <div>{week.title}</div>
-                  <div>{week.estimatedTime}</div>
+                  <div className='text-3xl '>{week.title}</div>
+                  <div className='text-xl'>{week.estimatedTime}</div>
                   {/* You can also loop over week.days if needed */}
+                  {week.days.map((day) => {
+                    return (
+
+                      <div key={day.day} className='my-1.5'>
+                        <div className='flex flex-wrap justify-items-start items-center gap-6'>
+                          <div className='font-bold'>Day {day.day}</div>
+                          <div className='font-bold'>{day.topic}</div>
+                        </div>
+                        <div className='font-normal pl-14'># {day.description}</div>
+                      </div>
+                    )
+                  })}
                 </div>
               ))}
 
