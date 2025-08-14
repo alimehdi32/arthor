@@ -21,7 +21,7 @@ const Reviews = () => {
     {
       dp: '/profile-pic3.jpg',
       username: 'Alice Johnson',
-      review: 'Bravin has made learning so much easier for me. The AI-generated road  maps are tailored to my needs, and the YouTube video integration is seamless. \n\nI love how I can track my progress and see how far I’ve come. \n\nThe no-ads experience is a breath of fresh air. I can focus on learning without any distractions. Highly recommend Bravin to anyone looking to enhance their learning journey!'
+      review: 'Bravin has made learning so much easier for me. The AI-generated road  maps are tailored to my needs, and the YouTube video integration is seamless. \n\nI love how I can track my progress and see how far I\'ve come. \n\nThe no-ads experience is a breath of fresh air. I can focus on learning without any distractions. Highly recommend Bravin to anyone looking to enhance their learning journey!'
     },
     ]
     useEffect(() => {
@@ -29,17 +29,37 @@ const Reviews = () => {
             Router.push('/reviews'); // Navigate to the reviews page when clicked
         }}, [clicked, Router]);
   return (
-    <div className='max-w-full min-h-[400px] bg-gray-950 border border-white/25 p-4'>
-      <h1 className='text-3xl font-semibold text-center text-gray-800'>Learning Made Easy – Just Ask Them</h1>
-      <h3 className='text-lg text-center text-gray-600 mt-2'>Because learning should feel personal.</h3>
-      <div className='p-10 overflow-x-auto flex flex-wrap items-center justify-center gap-6'>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-16 animate-fade-in-up">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          Learning Made Easy – Just Ask Them
+        </h1>
+        <h3 className="text-xl text-gray-400 max-w-2xl mx-auto">
+          Because learning should feel personal and inspiring.
+        </h3>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         {reviews.map((review, index) => (
-          <ReviewCard key={index} dp={review.dp} username={review.username} review={review.review} />
+          <div 
+            key={index} 
+            className="animate-fade-in-up"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <ReviewCard dp={review.dp} username={review.username} review={review.review} />
+          </div>
         ))}
       </div>
-      <button onClick={() => {setClicked(!clicked)}} className='bg-blue-500 text-white p-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors duration-300 mt-4'>
-        Not Satisfied?  Read More Reviews
-      </button>
+
+      <div className="text-center">
+        <button 
+          onClick={() => {setClicked(!clicked)}} 
+          className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold text-lg rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/50 border border-blue-500/50 transform hover:-translate-y-1"
+        >
+          Not Satisfied? Read More Reviews
+          <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+        </button>
+      </div>
     </div>
   )
 }

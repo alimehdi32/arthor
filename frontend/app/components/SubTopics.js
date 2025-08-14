@@ -1,7 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/navigation';
 
-
 const SubTopics = ( { subtopics } ) => {
   const Router = useRouter();
 
@@ -53,13 +52,27 @@ const SubTopics = ( { subtopics } ) => {
     
 
   return (
-    <button onClick={getVideo} className='p-4 bg-black/70 shadow-md hover:cursor-pointer hover:border hover:border-white/20 rounded-lg hover:bg-black/90 transition-all duration-300 ease-in-out'>
-      <div className='flex flex-wrap justify-items-start pl-3.5 text-xl font-medium text-slate-500 items-center gap-10'>
-        <div className='text-shadow-zinc-700 font-semibold'>Day {subtopics.day}</div>
-        <div className='font-semibold'>{subtopics.topic}</div>
+    <button 
+      onClick={getVideo} 
+      className="w-full p-6 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-xl shadow-md hover:shadow-lg hover:shadow-blue-500/25 hover:border-blue-500/50 hover:bg-gray-700/70 transition-all duration-300 hover:scale-[1.02] group text-left"
+    >
+      <div className="flex flex-wrap items-center gap-4 mb-3">
+        <div className="px-3 py-1 bg-blue-600/20 text-blue-400 font-bold text-sm rounded-full border border-blue-500/30 group-hover:bg-blue-600/30 transition-colors duration-300">
+          Day {subtopics.day}
+        </div>
+        <div className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors duration-300">
+          {subtopics.topic}
+        </div>
       </div>
-      <div className='pl-8'>
-        <div className='text-sm font-bold font-sans'>{subtopics.description}</div>
+      <div className="pl-4 border-l-2 border-gray-600 group-hover:border-blue-500 transition-colors duration-300">
+        <div className="text-sm text-gray-300 group-hover:text-gray-200 transition-colors duration-300 leading-relaxed">
+          {subtopics.description}
+        </div>
+      </div>
+      
+      {/* Hover Indicator */}
+      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
       </div>
     </button>
   )

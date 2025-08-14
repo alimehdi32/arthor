@@ -6,60 +6,110 @@ import Working from "./components/Working";
 export default function Home() {
   const messages = [
     "What do you want to master today?",
-
     "Type a skill. Get a roadmap.",
-
     "Dream it. Learn it. Achieve it.",
-
     "Your learning journey starts here.",
-
-    "Enter a topic. We’ll show you the way.",
-
+    "Enter a topic. We'll show you the way.",
     "Confused about where to begin? Just type it.",
-
     "From zero to hero — type your goal.",
-
     "AI-powered learning just a prompt away.",
-
     "Start with a word. End with a career.",
-
     "One prompt. Endless possibilities.",
-
     "Want to learn Python? Just ask.",
-
     "Type 'Web Dev' and get your roadmap.",
-
     "AI, Design, Coding — whatever you want!",
-
     "Explore UI/UX, Blockchain, or Anything!",
-
     "Type your interest — we handle the rest.",
-
     "New to tech? Start with a simple prompt.",
-
     "No clue? No problem. Just type a topic.",
-
     "Not sure where to start? Let AI guide you.",
-
     "Beginner-friendly paths. Start typing.",
-
     "Tell us what excites you. We'll build a roadmap.",
   ]
-  return (
-    <div>
 
-      <div className='flex items-center justify-between w-full border border-b-gray-800 border-black p-4 text-white'>
-        <div className="pl-4">
-          <p className="ml-0 ">WelCome to Bravin</p>
-          <p className="ml-0 ">Your intelligent guide to mastering any skill</p>
-          <p className="ml-0 ">Stuck on what to learn next? We got you.</p>
-          <p className="ml-0 ">AIVID helps you figure out what to learn and how to learn it — with AI-generated roadmaps made just for you. Not ready to dive in? No worries. Videos unlock only when you are. No pressure, just progress. Let’s make learning feel less overwhelming and way more doable.</p>
+  return (
+    <div className="min-h-screen bg-gray-950">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+        
+        {/* Floating Orbs */}
+        <div className="absolute top-20 left-20 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-cyan-500/20 rounded-full blur-2xl animate-float" style={{animationDelay: '2s'}}></div>
+
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="animate-fade-in-up">
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent leading-tight">
+              Welcome to Arthor
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-300 mb-6 max-w-4xl mx-auto leading-relaxed">
+              Your intelligent guide to mastering any skill with AI-powered learning roadmaps
+            </p>
+            <p className="text-lg text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+              Stuck on what to learn next? We&apos;ve got you covered. Our AI helps you figure out what to learn and how to learn it — with personalized roadmaps made just for you.
+            </p>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+              <a 
+                href="/PromptLab" 
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-lg rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/50 border border-blue-500/50 group"
+              >
+                Start Learning Now
+                <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+              </a>
+              <a 
+                href="/Explore" 
+                className="px-8 py-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold text-lg rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-lg border border-gray-700 hover:border-blue-500/50"
+              >
+                Explore Features
+              </a>
+            </div>
+
+            {/* Key Benefits */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="p-6 bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-800/50 hover:border-blue-500/50 transition-all duration-300 hover:scale-105 group">
+                <div className="text-3xl mb-3">🚀</div>
+                <h3 className="text-lg font-semibold text-white mb-2">AI-Powered</h3>
+                <p className="text-gray-400 text-sm">Personalized learning paths generated by advanced AI</p>
+              </div>
+              <div className="p-6 bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-800/50 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 group">
+                <div className="text-3xl mb-3">📚</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Structured Learning</h3>
+                <p className="text-gray-400 text-sm">Clear progression from beginner to advanced</p>
+              </div>
+              <div className="p-6 bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-800/50 hover:border-cyan-500/50 transition-all duration-300 hover:scale-105 group">
+                <div className="text-3xl mb-3">🎯</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Goal-Oriented</h3>
+                <p className="text-gray-400 text-sm">Focus on what matters most to your success</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <Features />
-      <Working/>
-      <Subscription />
-      <Reviews />
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-gray-900/50">
+        <Features />
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 bg-gray-950">
+        <Working />
+      </section>
+
+      {/* Subscription Section */}
+      <section className="py-20 bg-gray-900/50">
+        <Subscription />
+      </section>
+
+      {/* Reviews Section */}
+      <section className="py-20 bg-gray-950">
+        <Reviews />
+      </section>
     </div>
   );
 }

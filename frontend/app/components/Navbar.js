@@ -30,37 +30,102 @@ const Navbar = () => {
   });
 
   return (
-
-    <div className='flex items-center justify-between h-20 w-full border border-b-gray-800 border-black p-4 text-white'>
-
-      {loggedIn ? (
-        <>
-          <div className='flex justify-between mx-2.5'>
-            <Link href='/' className='text-2xl font-medium'>Arthor</Link>
-            <div className='flex items-center gap-10 mr-56'>
-              <Link href='/About' className='text-2xl font-bold shadow-orange-500'>About</Link>
-              <Link href='/PromptLab' className='text-2xl font-bold'>PromptLab</Link>
-              <Link href='/PromptVault' className='text-2xl font-bold'>PromptVault</Link>
-              <Link href='/LearnTube' className='text-2xl font-bold'>LearnTube</Link>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className='flex items-center gap-10'>
-            <Link href='/' className='text-2xl font-medium '>Arthor</Link>
-            <Link href='/About' className='text-2xl font-bold shadow-orange-500'>About</Link>
-            <Link href='/Explore' className='text-2xl font-bold'>Explore</Link>
-            <Link href='/Contact' className='text-2xl font-bold'>Contact</Link>
-          </div>
-          <div className='flex pr-0 items-center gap-0'>
-            <Link href='/login' className='bg-[#232323] mask-r-from-neutral-100 text-white pr-8 pl-6 py-4 rounded-4xl transition duration-300'>Login</Link>
-            <Link href='/Signup' className='bg-[#121212] mask-l-from-neutral-100  text-white pl-8 pr-6 py-4 rounded-4xl ml-0 transition duration-300'>SignUp</Link>
-          </div>
-        </>
-      )
-      }
-    </div>
+    <nav className="sticky top-0 z-50 w-full bg-gray-950/95 backdrop-blur-xl border-b border-gray-800/50 shadow-2xl">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {loggedIn ? (
+            <>
+              <div className="flex items-center space-x-8">
+                <Link 
+                  href="/" 
+                  className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent hover:from-blue-300 hover:to-purple-400 transition-all duration-300 transform hover:scale-105"
+                >
+                  Arthor
+                </Link>
+                <div className="hidden md:flex items-center space-x-8">
+                  <Link 
+                    href="/About" 
+                    className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-all duration-300 hover:scale-105 relative group"
+                  >
+                    About
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                  <Link 
+                    href="/PromptLab" 
+                    className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-all duration-300 hover:scale-105 relative group"
+                  >
+                    PromptLab
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                  <Link 
+                    href="/PromptVault" 
+                    className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-all duration-300 hover:scale-105 relative group"
+                  >
+                    PromptVault
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                  <Link 
+                    href="/LearnTube" 
+                    className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-all duration-300 hover:scale-105 relative group"
+                  >
+                    LearnTube
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex items-center space-x-8">
+                <Link 
+                  href="/" 
+                  className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent hover:from-blue-300 hover:to-purple-400 transition-all duration-300 transform hover:scale-105"
+                >
+                  Arthor
+                </Link>
+                <div className="hidden md:flex items-center space-x-8">
+                  <Link 
+                    href="/About" 
+                    className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-all duration-300 hover:scale-105 relative group"
+                  >
+                    About
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                  <Link 
+                    href="/Explore" 
+                    className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-all duration-300 hover:scale-105 relative group"
+                  >
+                    Explore
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                  <Link 
+                    href="/Contact" 
+                    className="text-lg font-semibold text-gray-300 hover:text-blue-400 transition-all duration-300 hover:scale-105 relative group"
+                  >
+                    Contact
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                  </Link>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <Link 
+                  href="/login" 
+                  className="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25 border border-gray-700 hover:border-blue-500/50"
+                >
+                  Login
+                </Link>
+                <Link 
+                  href="/SignUp" 
+                  className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 border border-blue-500/50"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
   )
 }
 

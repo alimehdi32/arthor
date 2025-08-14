@@ -7,7 +7,6 @@ const Features = () => {
     const Router = useRouter();
     const [click, setClick] = useState(false);
 
-
     const features = [{
         feature: 'AI-Powered Roadmap Generator',
         desc: 'Get a full learning path tailored to your input. Just type your goal, and BRAVIN builds a roadmap from scratch.'
@@ -42,19 +41,39 @@ const Features = () => {
             routeToFeatures();
         }
     }, [click, routeToFeatures]);
+
     return (
-        <div className='h-[600px] bg-white/5 backdrop-blur-md border border-white/10 flex flex-col items-center justify-around text-center p-4  shadow-lg'>
-            <h1 className='font-semibold text-3xl from-neutral-800 font-sans'>Brains Meet AI — What makes Bravin Easy&Fun</h1>
-            <div className='grid grid-rows-2 p-0'>
-                { features.map((item, index) => {
-                    return (
-                        <Card key={index} index={index} feature={item.feature} desc={item.desc} />
-                    )
-                })}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16 animate-fade-in-up">
+                <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                    Brains Meet AI — What Makes Arthor Easy & Fun
+                </h1>
+                <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Discover the power of AI-driven learning with our comprehensive feature set designed to make your educational journey seamless and enjoyable.
+                </p>
             </div>
-            <button onClick={() => {setClick(!click)}} className='bg-white/10 backdrop-blur-md border border-white/20 p-2 rounded-lg shadow-md hover:bg-white/20 transition-colors duration-300 text-white'>
-                Explore more features
-            </button>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                {features.map((item, index) => (
+                    <div 
+                        key={index} 
+                        className="animate-fade-in-up"
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                        <Card index={index} feature={item.feature} desc={item.desc} />
+                    </div>
+                ))}
+            </div>
+
+            <div className="text-center">
+                <button 
+                    onClick={() => {setClick(!click)}} 
+                    className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold text-lg rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/50 border border-blue-500/50 transform hover:-translate-y-1"
+                >
+                    Explore More Features
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
+                </button>
+            </div>
         </div>
     )
 }
