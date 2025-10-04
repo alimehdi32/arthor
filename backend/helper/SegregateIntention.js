@@ -11,7 +11,8 @@ async function SegregateIntention(userPrompt) {
 
   console.log('GROQ_API_KEY:', process.env.GROQ_API_KEY ? 'Loaded' : 'Missing');
 
-  return groq.chat.completions.create({
+  try {
+    const response = await groq.chat.completions.create({
     messages: [
       // Set an optional system message. This sets the behavior of the
       // assistant and can be used to provide specific instructions for
@@ -28,5 +29,15 @@ async function SegregateIntention(userPrompt) {
     ],
     model: "openai/gpt-oss-20b",
   });
+
+   return response;
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      error: error.message,
+    })
+  }
 };
 module.exports = { SegregateIntention };
