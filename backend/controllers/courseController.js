@@ -6,6 +6,9 @@ const Course = require('../models/Course');
 exports.generateRoadmap = async (req, res) => {
 
   const { prompt } = req.body;
+  const { intention } = req.body;
+
+  console.log('Intention received:', intention);
   if (!prompt) {
     return res.status(400).json({ error: 'Prompt is required' });
   }
