@@ -33,11 +33,7 @@ async function SegregateIntention(userPrompt) {
    return response;
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-      error: error.message,
-    })
+    return error.message
   }
 };
 module.exports = { SegregateIntention };

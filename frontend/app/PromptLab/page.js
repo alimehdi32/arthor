@@ -10,6 +10,8 @@ const PromptLab = () => {
   const [prompt, setPrompt] = useState('');
   const [roadmap, setRoadmap] = useState({});
   const [saved, setSaved] = useState(false);
+  
+
 
   const saveRoadmap = async () => {
     try {
@@ -26,6 +28,7 @@ const PromptLab = () => {
         console.log('Roadmap saved successfully:', data);
         toast.success('Roadmap saved successfully!', {
           className: 'my-custom-toast',
+          
         });
         setSaved(true);
 
@@ -51,6 +54,7 @@ const PromptLab = () => {
         body: JSON.stringify({ prompt }),
         credentials: 'include', // <== important!
       })
+      console.log('Response:', response.body)
       if (response.ok) {
         const data = await response.json();
         setRoadmap(JSON.parse(data));
@@ -58,10 +62,32 @@ const PromptLab = () => {
         console.log('Roadmap generated:', JSON.parse(data));
         setPrompt('')
         setClicked(false);
-
+        
+        toast.success('Roadmap generated successfully!', {
+          className: 'my-custom-toast',
+        });
         // Handle the generated roadmap data as needed
       } else {
-        console.error('Failed to generate roadmap:', response.statusText);
+        switch (response.status) {
+          case 400: toast.error('I am responsible for generating roadmaps for You. Answering to questions is outside of my scope.', {
+            className: 'my-custom-toast',
+          }); break;
+          case 401: toast.error('I am responsible for generating roadmaps for You. This prompt is irrevelant for generating roadmaps.', {
+            className: 'my-custom-toast',
+          }); break;
+          case 402: toast.error('This prompt is uncertain. Please specify clearly what type of course you want to learn', {
+            className: 'my-custom-toast',
+          }); break;
+          case 403: toast.error('This prompt is not related to education, it is a general query regarding modern world. Please specify clearly what type of course you want to learn', {
+            className: 'my-custom-toast',
+          }); break;
+          default: toast.error('Something went wrong. Could not generate Roadmap right now. Please try again later.', {
+            className: 'my-custom-toast',
+          }); break;
+        }
+        setPrompt('')
+        setClicked(false);
+        
       }
     } catch (error) {
       console.error('Error generating roadmap:', error);
@@ -75,16 +101,16 @@ const PromptLab = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.1),transparent_50%)]"></div>
-      
+
       {/* Floating Orbs */}
       <div className="absolute top-20 left-20 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
+      <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
 
       {roadmap.courseTitle ? (
         <div className="relative z-10">
           {!saved && (
-            <button 
-              onClick={saveRoadmap} 
+            <button
+              onClick={saveRoadmap}
               className="fixed top-24 right-8 z-50 px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-semibold text-lg rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/50 border border-green-500/50 transform hover:-translate-y-1 group"
             >
               💾 Commit Roadmap
@@ -101,12 +127,12 @@ const PromptLab = () => {
                 <p className="text-2xl font-semibold text-gray-300 mb-8">{roadmap.duration}</p>
 
                 {roadmap.weeks && roadmap.weeks.map((week, index) => (
-                  <div key={index} className="mb-8 animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
+                  <div key={index} className="mb-8 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
                     <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 p-6 rounded-2xl border border-blue-500/30 mb-6">
                       <div className="text-3xl font-bold text-blue-400 mb-2">{week.title}</div>
                       <div className="text-xl text-gray-300">{week.estimatedTime}</div>
                     </div>
-                    
+
                     <div className="space-y-4">
                       {week.days.map((day) => (
                         <div key={day.day} className="bg-gray-800/50 p-6 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 hover:scale-[1.02] group">
@@ -137,12 +163,12 @@ const PromptLab = () => {
               🎓💬 Welcome to PromptLab
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-              Your ultimate AI-powered learning lab! Sick of scrolling through random tutorials and not knowing where to start? We've got you covered. 
-              Just type in what you want to learn – like "How to become a full-stack developer", "AI in 3 months", or even "Master Canva for freelancing" – 
+              Your ultimate AI-powered learning lab! Sick of scrolling through random tutorials and not knowing where to start? We've got you covered.
+              Just type in what you want to learn – like "How to become a full-stack developer", "AI in 3 months", or even "Master Canva for freelancing" –
               and our AI will instantly build you a smart, step-by-step roadmap.
             </p>
             <p className="text-lg text-gray-400 mt-6 leading-relaxed max-w-3xl mx-auto">
-              You'll get videos, beginner-to-advanced stages, daily or weekly breakdowns, and smart progress tracking — all in one place. 
+              You'll get videos, beginner-to-advanced stages, daily or weekly breakdowns, and smart progress tracking — all in one place.
               Ask follow-up questions if you're stuck, explore more ideas, and when you're ready, commit your roadmap to your personal PromptVault.
             </p>
           </div>
@@ -163,8 +189,8 @@ const PromptLab = () => {
                 <div className="flex-1 text-center">
                   <div className="flex items-center justify-center space-x-2">
                     <div className="w-4 h-4 bg-blue-500 rounded-full animate-bounce"></div>
-                    <div className="w-4 h-4 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                    <div className="w-4 h-4 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                    <div className="w-4 h-4 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-4 h-4 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   </div>
                   <p className="text-white text-lg mt-2">Generating your roadmap...</p>
                 </div>
