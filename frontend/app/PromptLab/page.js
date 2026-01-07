@@ -68,21 +68,27 @@ const PromptLab = () => {
         });
         // Handle the generated roadmap data as needed
       } else {
+        // if(toast.isActive('my-custom-toast')) {
+        //   console.log('Toast is already active');
+        // }else {
+        //   console.log('Showing toast');
+        //   return ;
+        // }
         switch (response.status) {
           case 400: toast.error('I am responsible for generating roadmaps for You. Answering to questions is outside of my scope.', {
-            className: 'my-custom-toast',
-          }); break;
+            // className: 'my-custom-toast',
+          }); console.log('error 400'); break;
           case 401: toast.error('I am responsible for generating roadmaps for You. This prompt is irrevelant for generating roadmaps.', {
-            className: 'my-custom-toast',
-          }); break;
+            // className: 'my-custom-toast',
+          }); console.log('error 401'); break;
           case 402: toast.error('This prompt is uncertain. Please specify clearly what type of course you want to learn', {
-            className: 'my-custom-toast',
-          }); break;
+            // className: 'my-custom-toast',
+          }); console.log('error 402'); break;
           case 403: toast.error('This prompt is not related to education, it is a general query regarding modern world. Please specify clearly what type of course you want to learn', {
-            className: 'my-custom-toast',
-          }); break;
+            // className: 'my-custom-toast',
+          }); console.log('error 403'); break;
           default: toast.error('Something went wrong. Could not generate Roadmap right now. Please try again later.', {
-            className: 'my-custom-toast',
+            // className: 'my-custom-toast',
           }); break;
         }
         setPrompt('')

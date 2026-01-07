@@ -1,20 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --primary: #3b82f6;
+  /* Arthor Design Tokens */
+  --bg: #FAFBFC;
+  --card: #FFFFFF;
+  --text: #0F172A;
+  --muted: #475569;
+  --accent: #0B5FFF;
+  --accent-2: #0F766E;
+  --warning: #D97706;
+  --error: #DC2626;
+  
+  /* Legacy compatibility */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --primary: var(--accent);
   --primary-foreground: #ffffff;
-  --secondary: #1f2937;
-  --secondary-foreground: #f9fafb;
-  --accent: #8b5cf6;
+  --secondary: #F1F5F9;
+  --secondary-foreground: var(--text);
   --accent-foreground: #ffffff;
-  --muted: #374151;
-  --muted-foreground: #9ca3af;
-  --border: #374151;
-  --input: #1f2937;
-  --ring: #3b82f6;
-  --radius: 0.75rem;
+  --muted-foreground: var(--muted);
+  --border: #E2E8F0;
+  --input: var(--card);
+  --ring: var(--accent);
+  --radius: 0.5rem;
 }
 
 @theme inline {
@@ -40,11 +50,12 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.6;
   letter-spacing: 0.025em;
+  font-size: 16px;
 }
 
 /* Custom animations */

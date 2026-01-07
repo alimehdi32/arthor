@@ -1,139 +1,395 @@
-"use client"
-import React from 'react'
-import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+"use client";
 
-const Learntube = () => {
-  const searchParams = useSearchParams();
-  const [videoId, setVideoId] = useState();
-  const [title, setTitle] = useState();
+import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Button } from "@/app/components/ui/button";
+import { Progress } from "@/app/components/ui/progress";
+import { Badge } from "@/app/components/ui/badge";
+import { 
+  Play, 
+  Pause, 
+  Volume2, 
+  VolumeX, 
+  Settings, 
+  Maximize, 
+  SkipBack, 
+  SkipForward,
+  BookOpen,
+  FileText,
+  Download,
+  Star,
+  Clock,
+  CheckCircle2,
+  List,
+  X
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
-  useEffect(() => {
-    const idFromUrl = searchParams.get('videoId');
-    const titleFromUrl = searchParams.get('title');
-    if (idFromUrl && titleFromUrl) {
-      setTitle(titleFromUrl);
-      setVideoId(idFromUrl);
-      console.log('Video from URL:', idFromUrl);
-      console.log('Title from URL:', titleFromUrl);
-    } else {
-      console.log('No Video found in URL parameters.');
+const LearnTubePage = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [showTranscript, setShowTranscript] = useState(false);
+  const [currentChapter, setCurrentChapter] = useState(0);
+  const [completedChapters, setCompletedChapters] = useState(new Set());
+  const videoRef = useRef(null);
+
+  // Mock video data
+  const videoData = {
+    id: "1",
+    title: "React Hooks Deep Dive",
+    description: "Learn about useState, useEffect, and custom hooks in React",
+    duration: 1847, // 30:47 in seconds
+    thumbnail: "/api/placeholder/800/450",
+    chapters: [
+      { id: 1, title: "Introduction to Hooks", startTime: 0, duration: 180 },
+      { id: 2, title: "useState Hook", startTime: 180, duration: 300 },
+      { id: 3, title: "useEffect Hook", startTime: 480, duration: 420 },
+      { id: 4, title: "Custom Hooks", startTime: 900, duration: 360 },
+      { id: 5, title: "useContext and useReducer", startTime: 1260, duration: 400 },
+      { id: 6, title: "Best Practices", startTime: 1660, duration: 187 },
+    ],
+    transcript: [
+      { time: 0, text: "Welcome to this comprehensive guide on React Hooks." },
+      { time: 30, text: "Today we'll explore the most important hooks in React." },
+      { time: 60, text: "Let's start with the useState hook, which is fundamental to React." },
+      { time: 90, text: "The useState hook allows you to add state to functional components." },
+      { time: 120, text: "Here's a simple example of how to use useState." },
+      { time: 150, text: "As you can see, useState returns an array with two elements." },
+      { time: 180, text: "Now let's move on to the useEffect hook." },
+      { time: 210, text: "useEffect is used for side effects in functional components." },
+      { time: 240, text: "It's similar to componentDidMount and componentDidUpdate combined." },
+      { time: 270, text: "Let's look at some practical examples of useEffect." },
+    ],
+    flashcards: [
+      { id: 1, question: "What does useState return?", answer: "An array with the current state value and a setter function" },
+      { id: 2, question: "When does useEffect run?", answer: "After every render by default" },
+      { id: 3, question: "How do you create a custom hook?", answer: "By creating a function that starts with 'use' and calls other hooks" },
+    ],
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
     }
-  }, [searchParams]);
+  };
 
-  if (!videoId) {
-    return (
-      <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+  const handleSeek = (time) => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = time;
+      setCurrentTime(time);
+    }
+  };
 
-        {/* Floating Orbs */}
-        <div className="absolute top-20 left-20 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
+  const handleVolumeChange = (newVolume) => {
+    if (videoRef.current) {
+      videoRef.current.volume = newVolume;
+      setVolume(newVolume);
+      setIsMuted(newVolume === 0);
+    }
+  };
 
-        <div className="relative z-10 text-center animate-fade-in-up">
-          <div className="text-6xl mb-6">📺</div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            No Video Selected
-          </h1>
-          <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            Please select a video from your learning roadmap to start watching. Head back to PromptVault to continue your learning journey.
-          </p>
-          <a
-            href="/PromptVault"
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold text-lg rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/50 border border-blue-500/50 transform hover:-translate-y-1 group"
-          >
-            📚 Back to PromptVault
-            <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
-          </a>
-        </div>
-      </div>
-    );
-  }
+  const handleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const handlePlaybackRateChange = (rate) => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = rate;
+      setPlaybackRate(rate);
+    }
+  };
+
+  const handleChapterClick = (chapter) => {
+    handleSeek(chapter.startTime);
+    setCurrentChapter(chapter.id - 1);
+  };
+
+  const handleTranscriptClick = (time) => {
+    handleSeek(time);
+  };
+
+  const handleExtractFlashcards = () => {
+    // Mock flashcard extraction
+    console.log("Extracting flashcards...");
+  };
+
+  const handleTakeQuiz = () => {
+    // Mock quiz functionality
+    console.log("Starting quiz...");
+  };
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-gray-950 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+    <div className="min-h-screen bg-[var(--bg)]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Video Player */}
+          <div className="lg:col-span-2">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card className="overflow-hidden">
+                <div className="relative aspect-video bg-black">
+                  {/* Video Element */}
+                  <video
+                    ref={videoRef}
+                    className="w-full h-full object-cover"
+                    poster={videoData.thumbnail}
+                    onTimeUpdate={() => setCurrentTime(videoRef.current?.currentTime || 0)}
+                    onLoadedMetadata={() => setDuration(videoRef.current?.duration || 0)}
+                    onEnded={() => setIsPlaying(false)}
+                  >
+                    <source src="/api/placeholder/video" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
 
-      {/* Floating Orbs */}
-      <div className="absolute top-20 right-20 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 left-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
+                  {/* Video Controls Overlay */}
+                  <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-200">
+                    <div className="absolute bottom-4 left-4 right-4">
+                      {/* Progress Bar */}
+                      <div className="mb-4">
+                        <Progress 
+                          value={progress} 
+                          className="h-1 cursor-pointer"
+                          onClick={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const clickX = e.clientX - rect.left;
+                            const newTime = (clickX / rect.width) * duration;
+                            handleSeek(newTime);
+                          }}
+                        />
+                      </div>
 
-      <div className="relative z-10">
-        {/* Video Title Header */}
-        <div className="bg-gray-900/80 backdrop-blur-xl border-b border-gray-800/50 p-6 shadow-lg">
-          <div className="max-w-6xl mx-auto">
-            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              {title}
-            </h1>
-            <p className="text-gray-400">Learning in progress...</p>
-          </div>
-        </div>
+                      {/* Control Buttons */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={handlePlayPause}
+                            className="text-white hover:bg-white/20"
+                          >
+                            {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                          </Button>
+                          
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleSeek(Math.max(0, currentTime - 10))}
+                            className="text-white hover:bg-white/20"
+                          >
+                            <SkipBack className="h-4 w-4" />
+                          </Button>
+                          
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleSeek(Math.min(duration, currentTime + 10))}
+                            className="text-white hover:bg-white/20"
+                          >
+                            <SkipForward className="h-4 w-4" />
+                          </Button>
 
-        {/* Video Player Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up">
-            <iframe
-              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0&modestbranding=1`}
-              title={title}
-              className="w-full aspect-video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
+                          <div className="text-white text-sm">
+                            {formatTime(currentTime)} / {formatTime(duration)}
+                          </div>
+                        </div>
 
-          {/* Video Controls & Info */}
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Video Information */}
-            <div className="lg:col-span-2">
-              <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-white mb-4">About This Lesson</h2>
-                <p className="text-gray-300 leading-relaxed">
-                  This video is part of your personalized learning roadmap. Take notes, practice the concepts, and track your progress as you master new skills.
-                </p>
-              </div>
-            </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={handleMute}
+                            className="text-white hover:bg-white/20"
+                          >
+                            {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                          </Button>
 
-            {/* Learning Tools */}
-            <div className="space-y-4">
-              <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Learning Tools</h3>
-                <div className="space-y-3">
-                  <button className="w-full p-3 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 font-semibold rounded-xl border border-blue-500/30 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
-                    📝 Take Notes
-                  </button>
-                  <button className="w-full p-3 bg-purple-600/20 hover:bg-purple-600/30 text-purple-400 font-semibold rounded-xl border border-purple-500/30 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25">
-                    ✅ Mark Complete
-                  </button>
-                  <button className="w-full p-3 bg-green-600/20 hover:bg-green-600/30 text-green-400 font-semibold rounded-xl border border-green-500/30 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/25">
-                    🔄 Practice Again
-                  </button>
-                </div>
-              </div>
+                          <select
+                            value={playbackRate}
+                            onChange={(e) => handlePlaybackRateChange(parseFloat(e.target.value))}
+                            className="bg-black/50 text-white text-sm rounded px-2 py-1"
+                          >
+                            <option value={0.5}>0.5x</option>
+                            <option value={0.75}>0.75x</option>
+                            <option value={1}>1x</option>
+                            <option value={1.25}>1.25x</option>
+                            <option value={1.5}>1.5x</option>
+                            <option value={2}>2x</option>
+                          </select>
 
-              <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Progress</h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Current Video</span>
-                    <span className="text-blue-400">1 of 1</span>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-white hover:bg-white/20"
+                          >
+                            <Maximize className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="w-full bg-gray-700 rounded-full h-2">
-                    <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full w-full"></div>
-                  </div>
-                  <p className="text-xs text-gray-500">Video completed</p>
                 </div>
-              </div>
-            </div>
+
+                <CardContent className="p-6">
+                  <h1 className="text-2xl font-bold text-[var(--text)] mb-2">
+                    {videoData.title}
+                  </h1>
+                  <p className="text-[var(--muted)] mb-4">
+                    {videoData.description}
+                  </p>
+                  
+                  <div className="flex items-center gap-4 mb-6">
+                    <Badge variant="secondary">
+                      <Clock className="h-3 w-3 mr-1" />
+                      {formatTime(duration)}
+                    </Badge>
+                    <Badge variant="secondary">
+                      <Star className="h-3 w-3 mr-1" />
+                      4.8
+                    </Badge>
+                    <Badge variant="secondary">
+                      <BookOpen className="h-3 w-3 mr-1" />
+                      Intermediate
+                    </Badge>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button onClick={handleExtractFlashcards} className="flex-1">
+                      <FileText className="h-4 w-4 mr-2" />
+                      Extract Flashcards
+                    </Button>
+                    <Button onClick={handleTakeQuiz} variant="outline" className="flex-1">
+                      <CheckCircle2 className="h-4 w-4 mr-2" />
+                      Take Quiz
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Chapters */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <List className="h-5 w-5 text-[var(--accent)]" />
+                  Chapters
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {videoData.chapters.map((chapter, index) => (
+                    <motion.div
+                      key={chapter.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <div
+                        className={cn(
+                          "p-3 rounded-lg cursor-pointer transition-colors",
+                          currentChapter === index
+                            ? "bg-[var(--accent)]/10 border border-[var(--accent)]/20"
+                            : "hover:bg-[var(--secondary)]"
+                        )}
+                        onClick={() => handleChapterClick(chapter)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-medium text-[var(--text)] truncate">
+                              {chapter.title}
+                            </div>
+                            <div className="text-xs text-[var(--muted)]">
+                              {formatTime(chapter.startTime)} - {formatTime(chapter.startTime + chapter.duration)}
+                            </div>
+                          </div>
+                          {completedChapters.has(chapter.id) && (
+                            <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Transcript */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-[var(--accent)]" />
+                    Transcript
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowTranscript(!showTranscript)}
+                  >
+                    {showTranscript ? <X className="h-4 w-4" /> : <List className="h-4 w-4" />}
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              {showTranscript && (
+                <CardContent>
+                  <div className="max-h-64 overflow-y-auto space-y-2">
+                    {videoData.transcript.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className={cn(
+                          "p-2 rounded cursor-pointer transition-colors text-sm",
+                          Math.floor(currentTime) === item.time
+                            ? "bg-[var(--accent)]/10 border-l-2 border-[var(--accent)]"
+                            : "hover:bg-[var(--secondary)]"
+                        )}
+                        onClick={() => handleTranscriptClick(item.time)}
+                      >
+                        <div className="text-xs text-[var(--muted)] mb-1">
+                          {formatTime(item.time)}
+                        </div>
+                        <div className="text-[var(--text)]">
+                          {item.text}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              )}
+            </Card>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Learntube
+export default LearnTubePage;
